@@ -54,6 +54,9 @@ const getRandomDesire = async (): Promise<Desire> => {
   const docs = await getDocs(
     query(collection(db, "simple-desire"), where("uid", "==", uid))
   );
+  if (docs.size === 0) {
+    throw new Error("To remember, you must first memorize.");
+  }
   cached = [];
   docs.forEach((doc) =>
     cached!.push({ ...(doc.data() as Desire), desireUid: doc.id })
@@ -62,9 +65,10 @@ const getRandomDesire = async (): Promise<Desire> => {
 };
 
 const addDesire = async (description: string) => {
+  if (!description) throw new Error("A desire must have essence.");
   const auth = getAuth();
   const uid = auth.currentUser?.uid;
-  if (!uid) throw new Error("Connect to the World to connect to your Desires.");
+  if (!uid) throw new Error("Connect to the world to connect to your desires.");
   const db = getFirestore();
   const desire: Desire = {
     uid,
