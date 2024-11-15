@@ -38,7 +38,6 @@ const signIn = async () => {
   if (!credential) throw new Error("Error retrieving credential");
   const token = credential?.accessToken;
   const user = result.user;
-  console.log(user);
   return { token, user };
 };
 
