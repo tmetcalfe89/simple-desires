@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   User,
+  signOut,
 } from "firebase/auth";
 import {
   addDoc,
@@ -86,4 +87,16 @@ const onAuthChange = (callback: NextOrObserver<User>) => {
   onAuthStateChanged(auth, callback);
 };
 
-export { getRandomDesire, signIn, onAuthChange, addDesire, removeDesire };
+const logout = () => {
+  const auth = getAuth();
+  signOut(auth);
+};
+
+export {
+  getRandomDesire,
+  signIn,
+  onAuthChange,
+  addDesire,
+  removeDesire,
+  logout,
+};

@@ -3,6 +3,7 @@ import { FormEventHandler, useCallback, useEffect, useState } from "react";
 import {
   addDesire,
   getRandomDesire,
+  logout,
   onAuthChange,
   removeDesire,
   signIn,
@@ -51,23 +52,23 @@ function App() {
       ) : (
         <>
           <button onClick={handleGetDesire}>What do you desire?</button>
-          <button>Disconnect</button>
+          <button onClick={logout}>Disconnect</button>
+          {desire?.description}
+          {desire && (
+            <button onClick={handleRemoveDesire} disabled={releasing}>
+              Let it go
+            </button>
+          )}
+          <form onSubmit={handleAddDesire}>
+            <input
+              disabled={casting}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <button>Cast your desire</button>
+          </form>
         </>
       )}
-      {desire?.description}
-      {desire && (
-        <button onClick={handleRemoveDesire} disabled={releasing}>
-          Let it go
-        </button>
-      )}
-      <form onSubmit={handleAddDesire}>
-        <input
-          disabled={casting}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <button>Cast your desire</button>
-      </form>
     </>
   );
 }
